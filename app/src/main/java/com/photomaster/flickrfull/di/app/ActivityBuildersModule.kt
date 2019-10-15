@@ -1,6 +1,6 @@
 package com.photomaster.flickrfull.di.app
 
-import com.photomaster.flickrfull.di.app.main.PerMain
+import com.photomaster.flickrfull.di.main.PerMain
 import com.photomaster.flickrfull.ui.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -9,6 +9,6 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBuildersModule {
 
     @PerMain
-    @ContributesAndroidInjector
-    abstract fun contributMainActivity(): MainActivity
+    @ContributesAndroidInjector()
+    abstract fun contributeMainActivity(): MainActivity
 }

@@ -1,4 +1,4 @@
-package com.photomaster.flickrfull.di.app.main
+package com.photomaster.flickrfull.di.main
 
 import javax.inject.Scope
 
