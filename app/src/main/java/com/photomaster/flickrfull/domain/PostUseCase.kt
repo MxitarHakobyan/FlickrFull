@@ -16,14 +16,14 @@ class PostUseCase @Inject constructor(private val postsRepository: PostsReposito
         val disposable = postsRepository.getPostsList()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { list -> print("himarrrrrrrrrrrrrrr $list") }
+            .subscribe { list -> print("$list") }
     }
 
     fun getPostsById(id: Int) {
         val disposable = postsRepository.getPostsById(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { list -> print("++++++++++++++++++ $list") }
+            .subscribe { list -> print("$list") }
     }
 
     fun putPost(
@@ -37,7 +37,7 @@ class PostUseCase @Inject constructor(private val postsRepository: PostsReposito
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CompletableObserver {
                 override fun onComplete() {
-                    Log.d("+++++++++", "chishta anasun")
+                    Log.d("+++++++++", "Request completed")
                 }
 
                 override fun onSubscribe(d: Disposable) {
@@ -45,7 +45,7 @@ class PostUseCase @Inject constructor(private val postsRepository: PostsReposito
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.d("+++++++++", "chishta anasun ${e.message}")
+                    Log.d("+++++++++", "Request error ${e.message}")
                 }
 
             })
@@ -57,7 +57,7 @@ class PostUseCase @Inject constructor(private val postsRepository: PostsReposito
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CompletableObserver {
                 override fun onComplete() {
-                    Log.d("-----------", "chishta anasun")
+                    Log.d("-----------", "Request completed")
 
                 }
 
@@ -66,7 +66,7 @@ class PostUseCase @Inject constructor(private val postsRepository: PostsReposito
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.d("----------", "chishta anasun ${e.message}")
+                    Log.d("----------", "Request error ${e.message}")
 
                 }
             }

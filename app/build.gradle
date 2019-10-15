@@ -74,12 +74,6 @@ dependencies {
     implementation "android.arch.persistence.room:rxjava2:1.1.1"
     kapt "android.arch.persistence.room:compiler:$room_version"
 
-
-    //Navigation
-    def nav_version = "2.1.0"
-    implementation "androidx.navigation:navigation-fragment:$nav_version"
-    implementation "androidx.navigation:navigation-ui:$nav_version"
-
     // RxJava
     def rxJava_version = '2.1.1'
     implementation "io.reactivex.rxjava2:rxjava:${rxJava_version}"
@@ -97,4 +91,8 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation 'com.squareup.okhttp:okhttp:2.6.0'
+
+    implementation "com.squareup.okhttp3:logging-interceptor:4.2.1"
+    implementation 'com.squareup.okio:okio:2.2.2'
 }
