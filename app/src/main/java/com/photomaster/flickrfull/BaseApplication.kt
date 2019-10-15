@@ -1,6 +1,6 @@
 package com.photomaster.flickrfull
 
-import com.photomaster.flickrfull.di.DaggerAppComponent
+import com.photomaster.flickrfull.di.app.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 

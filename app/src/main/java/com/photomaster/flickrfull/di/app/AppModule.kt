@@ -1,6 +1,6 @@
 package com.photomaster.flickrfull.di.app
 
-import com.photomaster.flickrfull.data.remote.FlickrApi
+import com.photomaster.flickrfull.data.remote.JsonPlaceHolderApi
 import com.photomaster.flickrfull.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -27,8 +27,7 @@ class AppModule {
         @JvmStatic
         @PerApplication
         @Provides
-        fun provideFlickrApi(retrofit: Retrofit) {
-            retrofit.create(FlickrApi::class.java)
-        }
+        fun provideJsonPlaceHolderApi(retrofit: Retrofit): JsonPlaceHolderApi =
+            retrofit.create(JsonPlaceHolderApi::class.java)
     }
 }
