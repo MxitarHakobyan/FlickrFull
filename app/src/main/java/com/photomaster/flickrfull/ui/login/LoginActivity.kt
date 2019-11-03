@@ -10,12 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.photomaster.flickrfull.R
 import com.photomaster.flickrfull.databinding.ActivityLoginBinding
 import com.photomaster.flickrfull.ui.common.viewmodels_factory.ViewModelsProviderFactory
+import com.photomaster.flickrfull.ui.main.MainActivity
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 class LoginActivity : DaggerAppCompatActivity() {
-
-    private val TAG = "LoginActivity"
 
     @Inject
     lateinit var viewModelsProviderFactory: ViewModelsProviderFactory
@@ -36,8 +35,16 @@ class LoginActivity : DaggerAppCompatActivity() {
             viewModelsProviderFactory
         ).get(LoginViewModel::class.java)
 
+        loginViewModel.getOauthFromStore()
+        loginViewModel.isLoggedIn.observe(this, Observer {
+            if (it) {
+                startActivity(Intent(this, MainActivity::class.java))
+            }
+        })
+
         binding.viewModel = loginViewModel
         binding.loginClickHandler = loginClickHandler
+
 
         loginViewModel.loginUrl.observe(this, Observer {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it.toURI().toString())))

@@ -1,6 +1,7 @@
 package com.photomaster.flickrfull.domain
 
 import com.googlecode.flickrjandroid.oauth.OAuthToken
+import com.photomaster.flickrfull.utils.OAUTH_SECRET_TOKEN_KEY
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

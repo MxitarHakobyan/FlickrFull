@@ -1,9 +1,7 @@
 package com.photomaster.flickrfull.ui.login
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.googlecode.flickrjandroid.oauth.OAuthToken
 import com.photomaster.flickrfull.domain.LoginUseCase
 import io.reactivex.disposables.CompositeDisposable
 import java.net.URL
@@ -14,17 +12,15 @@ class LoginViewModel @Inject constructor(
     private val compositeDisposable: CompositeDisposable
 ) : ViewModel() {
 
-    private val TAG = "LoginViewModel"
-
-    private val oAuthToken: MutableLiveData<OAuthToken> = MutableLiveData()
     val loginUrl: MutableLiveData<URL> = MutableLiveData()
+    val isLoggedIn: MutableLiveData<Boolean> = MutableLiveData()
 
     fun authorizeUser() {
         loginUseCase.authorize()
 
         compositeDisposable.add(
             loginUseCase.getOAuthTokenObservable()
-                .subscribe { oAuthToken.value = it }
+                .subscribe { loginUseCase.storeOauthSecret(it.oauthTokenSecret) }
         )
 
         compositeDisposable.add(
@@ -37,9 +33,27 @@ class LoginViewModel @Inject constructor(
         token: String,
         oauthVerifier: String
     ) {
-        loginUseCase.getAccessToken(token, oAuthToken.value!!.oauthTokenSecret ,oauthVerifier);
+        loginUseCase.getAccessToken(
+            token,
+            loginUseCase.getOAuthTokenSecret(),
+            oauthVerifier
+        );
         compositeDisposable.add(loginUseCase.getOAuthObservable()
-            .subscribe { t -> Log.d(TAG, t.token.toString()) }
+            .subscribe {
+                compositeDisposable.add(
+                    loginUseCase.storeOAuth(it)
+                        .subscribe { b ->
+                            isLoggedIn.postValue(b)
+                        }
+                )
+            }
+        )
+    }
+
+    fun getOauthFromStore() {
+        compositeDisposable.add(
+            loginUseCase.oAuthFromStore()
+                .subscribe { isLoggedIn.postValue(it) }
         )
     }
 
