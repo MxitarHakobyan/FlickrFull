@@ -1,4 +1,4 @@
-package com.photomaster.flickrfull.ui
+package com.photomaster.flickrfull.ui.main
 
 import android.os.Bundle
 import com.photomaster.flickrfull.R

@@ -4,37 +4,56 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.photomaster.flickrfull.R
-import com.photomaster.flickrfull.domain.LoginUseCase
+import com.photomaster.flickrfull.databinding.ActivityLoginBinding
+import com.photomaster.flickrfull.ui.common.viewmodels_factory.ViewModelsProviderFactory
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
-
 
 class LoginActivity : DaggerAppCompatActivity() {
 
     private val TAG = "LoginActivity"
+
     @Inject
-    lateinit var loginUseCase: LoginUseCase
+    lateinit var viewModelsProviderFactory: ViewModelsProviderFactory
+    @Inject
+    lateinit var loginClickHandler: LoginClickHandler
+
+    private lateinit var loginViewModel: LoginViewModel
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
 
-        loginUseCase.authorize()
-        loginUseCase.getUrlSubject()
-            .subscribe {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it.toURI().toString())))
-            }
+        val binding: ActivityLoginBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_login)
+
+        loginViewModel = ViewModelProvider(
+            viewModelStore,
+            viewModelsProviderFactory
+        ).get(LoginViewModel::class.java)
+
+        binding.viewModel = loginViewModel
+        binding.loginClickHandler = loginClickHandler
+
+        loginViewModel.loginUrl.observe(this, Observer {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it.toURI().toString())))
+        })
 
     }
 
     override fun onResume() {
         super.onResume()
         val uri: Uri? = intent.data
-        uri.let {
-            Log.d(TAG, "$it")
+        val oauthToken: String
+        val oauthVerifier: String
+        if (uri != null) {
+            oauthToken = uri.getQueryParameter("oauth_token")!!
+            oauthVerifier = uri.getQueryParameter("oauth_verifier")!!
+            loginViewModel.getAccessToken(oauthToken, oauthVerifier)
         }
     }
 }
