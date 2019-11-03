@@ -1,4 +1,4 @@
-package com.photomaster.flickrfull.data.local.shared_prefs
+package com.photomaster.flickrfull.data.locale.shared_prefs
 
 import com.google.gson.Gson
 import com.googlecode.flickrjandroid.oauth.OAuth

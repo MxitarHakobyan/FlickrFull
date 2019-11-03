@@ -1,4 +1,4 @@
-package com.photomaster.flickrfull.domain
+package com.photomaster.flickrfull.domain.common
 
 import com.googlecode.flickrjandroid.oauth.OAuthToken
 import com.photomaster.flickrfull.utils.OAUTH_SECRET_TOKEN_KEY

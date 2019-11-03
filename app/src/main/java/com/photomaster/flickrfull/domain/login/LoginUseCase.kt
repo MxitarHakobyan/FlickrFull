@@ -1,9 +1,10 @@
-package com.photomaster.flickrfull.domain
+package com.photomaster.flickrfull.domain.login
 
 import com.googlecode.flickrjandroid.oauth.OAuth
 import com.googlecode.flickrjandroid.oauth.OAuthToken
-import com.photomaster.flickrfull.data.local.shared_prefs.LocalStorageImpl
+import com.photomaster.flickrfull.data.locale.shared_prefs.LocalStorageImpl
 import com.photomaster.flickrfull.di.login.PerLogin
+import com.photomaster.flickrfull.domain.common.BaseUseCase
 import com.photomaster.flickrfull.oauth.FlickrClient
 import com.photomaster.flickrfull.utils.OAUTH_KEY
 import com.photomaster.flickrfull.utils.OAUTH_SECRET_TOKEN_KEY

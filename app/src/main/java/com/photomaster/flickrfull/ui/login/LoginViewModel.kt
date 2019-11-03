@@ -2,7 +2,7 @@ package com.photomaster.flickrfull.ui.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.photomaster.flickrfull.domain.LoginUseCase
+import com.photomaster.flickrfull.domain.login.LoginUseCase
 import io.reactivex.disposables.CompositeDisposable
 import java.net.URL
 import javax.inject.Inject

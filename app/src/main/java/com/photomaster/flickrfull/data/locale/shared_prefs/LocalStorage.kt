@@ -1,6 +1,4 @@
-package com.photomaster.flickrfull.data.local.shared_prefs
-
-import io.reactivex.Observable
+package com.photomaster.flickrfull.data.locale.shared_prefs
 
 interface LocalStorage {
     fun writeTo(

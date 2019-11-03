@@ -1,4 +1,4 @@
-package com.photomaster.flickrfull.data.local.shared_prefs
+package com.photomaster.flickrfull.data.locale.shared_prefs
 
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
@@ -6,8 +6,6 @@ import com.googlecode.flickrjandroid.oauth.OAuth
 import com.photomaster.flickrfull.di.app.PerApplication
 import io.reactivex.Completable
 import io.reactivex.Maybe
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 private const val SHARED_NAME = "sharedPrefs"

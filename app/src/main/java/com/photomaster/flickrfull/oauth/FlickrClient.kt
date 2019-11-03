@@ -17,7 +17,7 @@ class FlickrClient @Inject constructor(private val flickr: Flickr) {
     }
 
     fun getAuthorizationResponse(oAuthToken: OAuthToken): URL {
-        return flickr.oAuthInterface.buildAuthenticationUrl(Permission.WRITE, oAuthToken)
+        return flickr.oAuthInterface.buildAuthenticationUrl(Permission.DELETE, oAuthToken)
     }
 
     fun getAccessToken(

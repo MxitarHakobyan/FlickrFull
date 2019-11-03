@@ -2,6 +2,7 @@ package com.photomaster.flickrfull.domain
 
 import com.photomaster.flickrfull.data.repos.PostsRepository
 import com.photomaster.flickrfull.di.app.PerApplication
+import com.photomaster.flickrfull.domain.common.BaseUseCase
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
