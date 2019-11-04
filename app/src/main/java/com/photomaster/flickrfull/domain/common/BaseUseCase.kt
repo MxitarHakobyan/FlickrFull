@@ -1,9 +1,7 @@
 package com.photomaster.flickrfull.domain.common
 
-import com.googlecode.flickrjandroid.oauth.OAuthToken
-import com.photomaster.flickrfull.utils.OAUTH_SECRET_TOKEN_KEY
+import com.photomaster.flickrfull.data.remote.entity.HeadOfResponse
 import io.reactivex.*
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
@@ -20,8 +18,18 @@ abstract class BaseUseCase {
     }
 
     fun execute(
-        single: Single<OAuthToken>,
-        observer: SingleObserver<OAuthToken>
+        observable: Flowable<HeadOfResponse>,
+        observer: FlowableSubscriber<HeadOfResponse>
+    ) {
+        observable
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .subscribe(observer)
+    }
+
+    fun execute(
+        single: Single<Any>,
+        observer: SingleObserver<Any>
     ) {
         single
             .subscribeOn(Schedulers.io())

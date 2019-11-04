@@ -65,7 +65,7 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
     // ViewModel and LiveData
-    def lifecycle_version = '2.2.0-alpha05'
+    def lifecycle_version = '2.2.0-rc01'
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 
     //room
@@ -101,7 +101,7 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:4.2.1"
     implementation 'com.squareup.okio:okio:2.2.2'
 
-    //Flickr api
+    //Flickr Api
     implementation 'com.googlecode.flickrj-android:flickrj-android:2.1.0'
     implementation 'org.slf4j:slf4j-simple:1.7.12'
 }

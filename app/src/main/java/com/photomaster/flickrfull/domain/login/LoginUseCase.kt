@@ -8,6 +8,7 @@ import com.photomaster.flickrfull.domain.common.BaseUseCase
 import com.photomaster.flickrfull.oauth.FlickrClient
 import com.photomaster.flickrfull.utils.OAUTH_KEY
 import com.photomaster.flickrfull.utils.OAUTH_SECRET_TOKEN_KEY
+import com.photomaster.flickrfull.utils.OAUTH_TOKEN_KEY
 import io.reactivex.Completable
 import io.reactivex.MaybeObserver
 import io.reactivex.Observable
@@ -94,6 +95,7 @@ class LoginUseCase @Inject constructor(
             .subscribe(object : MaybeObserver<OAuth> {
                 override fun onSuccess(t: OAuth) {
                     haveOauthStored.onNext(true)
+                    storeOauthToken(t.token.oauthToken)
                 }
 
                 override fun onComplete() {
@@ -111,6 +113,10 @@ class LoginUseCase @Inject constructor(
         return haveOauthStored.hide()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    private fun storeOauthToken(oAuthToken: String) {
+        localStorage.writeTo(OAUTH_TOKEN_KEY, oAuthToken)
     }
 
     override fun dispose() {

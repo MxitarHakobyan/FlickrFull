@@ -2,6 +2,7 @@ package com.photomaster.flickrfull.di.app
 
 import com.photomaster.flickrfull.di.login.LoginModule
 import com.photomaster.flickrfull.di.login.PerLogin
+import com.photomaster.flickrfull.di.main.MainModule
 import com.photomaster.flickrfull.di.main.PerMain
 import com.photomaster.flickrfull.ui.login.LoginActivity
 import com.photomaster.flickrfull.ui.main.MainActivity
@@ -16,6 +17,6 @@ abstract class ActivityBuildersModule {
     abstract fun contributeLoginActivity(): LoginActivity
 
     @PerMain
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector(modules = [MainModule::class])
     abstract fun contributeMainActivity(): MainActivity
 }

@@ -1,11 +1,15 @@
 package com.photomaster.flickrfull.di.app
 
+import com.photomaster.flickrfull.data.locale.shared_prefs.LocalStorageImpl
 import com.photomaster.flickrfull.data.remote.FlickrApi
 import com.photomaster.flickrfull.utils.BASE_URL
+import com.photomaster.flickrfull.utils.OAUTH_TOKEN_KEY
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -21,7 +25,7 @@ abstract class AppModule {
         @PerApplication
         @Provides
         fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
-            val httpLoggingInterceptor = HttpLoggingInterceptor();
+            val httpLoggingInterceptor = HttpLoggingInterceptor()
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
             return httpLoggingInterceptor
         }
@@ -29,9 +33,25 @@ abstract class AppModule {
         @JvmStatic
         @PerApplication
         @Provides
-        fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor) =
+        fun provideOkHttpClient(
+            httpLoggingInterceptor: HttpLoggingInterceptor,
+            localStorageImpl: LocalStorageImpl
+        ) =
             OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
+                .addInterceptor(object : Interceptor {
+
+                    override fun intercept(chain: Interceptor.Chain): Response {
+                        chain.connection()
+                        val original = chain.request()
+                        val request = original.newBuilder()
+                            .header("auth_token", localStorageImpl.readFrom(OAUTH_TOKEN_KEY))
+                            .method(original.method, original.body)
+                            .build()
+
+                        return chain.proceed(request)
+                    }
+                })
                 .build()
 
         @JvmStatic
@@ -53,6 +73,6 @@ abstract class AppModule {
 
         @JvmStatic
         @Provides
-        fun provideCompositeDisposable() : CompositeDisposable = CompositeDisposable()
+        fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
     }
 }
