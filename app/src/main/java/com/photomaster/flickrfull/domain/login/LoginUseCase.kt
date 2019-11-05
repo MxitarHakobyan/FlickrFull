@@ -9,6 +9,7 @@ import com.photomaster.flickrfull.oauth.FlickrClient
 import com.photomaster.flickrfull.utils.OAUTH_KEY
 import com.photomaster.flickrfull.utils.OAUTH_SECRET_TOKEN_KEY
 import com.photomaster.flickrfull.utils.OAUTH_TOKEN_KEY
+import com.photomaster.flickrfull.utils.USER_ID_KEY
 import io.reactivex.Completable
 import io.reactivex.MaybeObserver
 import io.reactivex.Observable
@@ -70,10 +71,6 @@ class LoginUseCase @Inject constructor(
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
 
-    fun storeOauthSecret(oAuthSecret: String) {
-        localStorage.writeTo(OAUTH_SECRET_TOKEN_KEY, oAuthSecret)
-    }
-
     fun getOAuthTokenSecret(): String = localStorage.readFrom(OAUTH_SECRET_TOKEN_KEY)
 
     fun storeOAuth(oAuth: OAuth): Observable<Boolean> {
@@ -95,7 +92,8 @@ class LoginUseCase @Inject constructor(
             .subscribe(object : MaybeObserver<OAuth> {
                 override fun onSuccess(t: OAuth) {
                     haveOauthStored.onNext(true)
-                    storeOauthToken(t.token.oauthToken)
+                    storeInShared(OAUTH_TOKEN_KEY, t.token.oauthToken)
+                    storeInShared(USER_ID_KEY, t.user.id)
                 }
 
                 override fun onComplete() {
@@ -115,8 +113,8 @@ class LoginUseCase @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    private fun storeOauthToken(oAuthToken: String) {
-        localStorage.writeTo(OAUTH_TOKEN_KEY, oAuthToken)
+    fun storeInShared(key: String, oAuthSecret: String) {
+        localStorage.writeTo(key, oAuthSecret)
     }
 
     override fun dispose() {

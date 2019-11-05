@@ -3,6 +3,7 @@ package com.photomaster.flickrfull.ui.login
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.photomaster.flickrfull.domain.login.LoginUseCase
+import com.photomaster.flickrfull.utils.OAUTH_SECRET_TOKEN_KEY
 import io.reactivex.disposables.CompositeDisposable
 import java.net.URL
 import javax.inject.Inject
@@ -20,7 +21,12 @@ class LoginViewModel @Inject constructor(
 
         compositeDisposable.add(
             loginUseCase.getOAuthTokenObservable()
-                .subscribe { loginUseCase.storeOauthSecret(it.oauthTokenSecret) }
+                .subscribe {
+                    loginUseCase.storeInShared(
+                        OAUTH_SECRET_TOKEN_KEY,
+                        it.oauthTokenSecret
+                    )
+                }
         )
 
         compositeDisposable.add(
@@ -37,7 +43,7 @@ class LoginViewModel @Inject constructor(
             token,
             loginUseCase.getOAuthTokenSecret(),
             oauthVerifier
-        );
+        )
         compositeDisposable.add(loginUseCase.getOAuthObservable()
             .subscribe {
                 compositeDisposable.add(

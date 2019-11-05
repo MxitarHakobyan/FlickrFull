@@ -48,6 +48,15 @@ class MainUseCase @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
     }
 
+    fun storeInShared(
+        key: String,
+        userId: String
+    ) {
+        localStorage.writeTo(key, userId)
+    }
+
+    fun getFromStore(key: String): String = localStorage.readFrom(key)
+
     override fun dispose() {
         compositeDisposable.dispose()
     }
