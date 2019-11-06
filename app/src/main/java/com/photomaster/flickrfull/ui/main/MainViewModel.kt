@@ -3,6 +3,7 @@ package com.photomaster.flickrfull.ui.main
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.googlecode.flickrjandroid.oauth.OAuth
 import com.photomaster.flickrfull.data.remote.entity.HeadOfResponse
@@ -19,6 +20,8 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     val oAuthField: ObservableField<OAuth> = ObservableField()
+    val inputtedTitle: MutableLiveData<String> = MutableLiveData()
+    val inputtedDescription: MutableLiveData<String> = MutableLiveData()
 
     fun getOauthFromStore() {
         compositeDisposable.add(
@@ -36,6 +39,10 @@ class MainViewModel @Inject constructor(
             )
         )
     )
+
+    fun createGallery() {
+        galleryUseCase.createGallery(inputtedTitle.value!!, inputtedDescription.value!!)
+    }
 
     override fun onCleared() {
         super.onCleared()

@@ -2,6 +2,7 @@ package com.photomaster.flickrfull.data.locale.shared_prefs
 
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
+import android.util.Log
 import com.googlecode.flickrjandroid.oauth.OAuth
 import com.photomaster.flickrfull.di.app.PerApplication
 import io.reactivex.Completable

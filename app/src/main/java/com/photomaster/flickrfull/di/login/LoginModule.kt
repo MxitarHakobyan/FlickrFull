@@ -15,17 +15,17 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class LoginModule {
 
-    @Module
-    companion object {
-
-        @JvmStatic
-        @PerLogin
-        @Provides
-        fun provideFlickr() = Flickr(
-            CONSUMER_KEY,
-            CONSUMER_SECRET
-        )
-    }
+//    @Module
+//    companion object {
+//
+//        @JvmStatic
+//        @PerLogin
+//        @Provides
+//        fun provideFlickr() = Flickr(
+//            CONSUMER_KEY,
+//            CONSUMER_SECRET
+//        )
+//    }
 
     @Binds
     @IntoMap

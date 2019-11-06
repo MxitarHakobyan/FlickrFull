@@ -19,7 +19,6 @@ interface FlickrApi {
         @Query("user_id") userId: String
     ): Flowable<HeadOfResponse>
 
-    @FormUrlEncoded
     @POST(
         "rest/" +
                 "?method=flickr.galleries.create" +
@@ -28,9 +27,9 @@ interface FlickrApi {
                 "&nojsoncallback=1"
     )
     fun createGallery(
-        @Field("title") title: String,
-        @Field("description") description: String,
-        @Field("primary_photo_id") photoId: String,
-        @Field("full_result") fullResult: String
+        @Query("title") title: String,
+        @Query("description") description: String,
+        @Query("primary_photo_id") photoId: String,
+        @Query("full_result") fullResult: String
     ) : Completable
 }
